@@ -1,22 +1,30 @@
 from fastapi import FastAPI
 from app.api.endpoints import router as api_router
 from app.database.database import engine, Base
-from app.models.model import User, EHR, Appointment, AllergyTracking, LabResults, MedicalHistory, Prescription, Reminder
- # Ensure models are imported
+from app.config import settings
 
+# Initialize the FastAPI app
+app = FastAPI(
+    title="Your App Name",
+    description="API for managing healthcare data",
+    version="1.0.0",
+)
 
-# Initialize FastAPI App
-app = FastAPI(title="IHMP API")
-
-# Include Routers
+# Include the API routers
 app.include_router(api_router)
 
-# Create Database
+# Create the database tables
+Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-def root():
-    return {"message": "IHMP API is Running"}
+# Dependency to get the database session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
+# Run the application
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=Settings().debug)
