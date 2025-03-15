@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from sqlalchemy.orm import relationship
 
 class EHRSchema(BaseModel):
     patient_id: int
@@ -6,5 +7,5 @@ class EHRSchema(BaseModel):
     treatment: str
     notes: str
 
-    class Config:
-        orm_mode = True
+ehr = relationship("EHR", back_populates="user")
+

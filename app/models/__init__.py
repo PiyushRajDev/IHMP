@@ -7,7 +7,6 @@ from .medical_history import MedicalHistory
 from .prescription import Prescription
 from .reminder import Reminder
 from .patient_uploaded_docs import PatientUploadedDocs
-from .ai_transcriptions import AITranscriptions
 from .diagnostic_insights import DiagnosticInsights
 from .ehr_summary import EHRSummary
 from .followup_recommendations import FollowupRecommendations

@@ -1,14 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from app.models.model import EHR
-from app.schemas.scemas import EHRSchema, EHRSummarySchema
+from app.models.ehr_summary import EHRSummary
+from app.models import EHR
+from app.schemas import EHRSchema, EHRSummarySchema
 from app.database.database import SessionLocal
 
-router = APIRouter(
-    prefix="/ehr",
-    tags=["ehr"],
-    responses={404: {"description": "Not found"}},
-)
+router = APIRouter()
 
 def get_db():
     db = SessionLocal()

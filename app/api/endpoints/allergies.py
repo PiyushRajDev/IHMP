@@ -1,14 +1,17 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from app.models.model import AllergyTracking, User
-from app.schemas.scemas import AllergyTrackingCreate
-from app.dependencies.database import get_db
+from app.models import AllergyTracking, User
+from app.schemas import AllergyTrackingCreate
+from app.database.database import SessionLocal
 
-router = APIRouter(
-    prefix="/allergies",
-    tags=["allergies"],
-    responses={404: {"description": "Not found"}},
-)
+router = APIRouter()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @router.post("/")
 def create_allergy(allergy_data: AllergyTrackingCreate, db: Session = Depends(get_db)):

@@ -1,17 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from app.models.model import Prescription, User
-from app.schemas.scemas import PrescriptionSchema
-from app.dependencies.database import get_db
+from app.models import Prescription, User
+from app.schemas import PrescriptionSchema
+from app.database.database import SessionLocal
 
-router = APIRouter(
-    prefix="/prescriptions",
-    tags=["prescriptions"],
-    responses={404: {"description": "Not found"}},
-)
+router = APIRouter()
 
 @router.post("/")
-def add_prescription(prescription: PrescriptionSchema, db: Session = Depends(get_db)):
+def add_prescription(prescription: PrescriptionSchema, db: Session = Depends(SessionLocal)):
     # Check if patient exists
     patient = db.query(User).filter(User.user_id == prescription.patient_id, User.role == "Patient").first()
     if not patient:
@@ -29,7 +25,7 @@ def add_prescription(prescription: PrescriptionSchema, db: Session = Depends(get
     return {"message": "Prescription added", "prescription_id": new_prescription.prescription_id}
 
 @router.get("/{patient_id}")
-def get_prescriptions(patient_id: int, db: Session = Depends(get_db)):
+def get_prescriptions(patient_id: int, db: Session = Depends(SessionLocal)):
     prescriptions = db.query(Prescription).filter(Prescription.patient_id == patient_id).all()
     if not prescriptions:
         raise HTTPException(status_code=404, detail="No prescriptions found")

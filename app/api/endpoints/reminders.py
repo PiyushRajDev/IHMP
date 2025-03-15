@@ -1,17 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from app.models.model import Reminder, User
-from app.schemas.scemas import ReminderSchema
-from app.dependencies.database import get_db
+from app.models import Reminder, User
+from app.schemas import ReminderSchema
+from app.database.database import SessionLocal
 
-router = APIRouter(
-    prefix="/reminders",
-    tags=["reminders"],
-    responses={404: {"description": "Not found"}},
-)
+router = APIRouter()
 
 @router.post("/")
-def add_reminder(reminder: ReminderSchema, db: Session = Depends(get_db)):
+def add_reminder(reminder: ReminderSchema, db: Session = Depends(SessionLocal)):
     # Check if user exists
     user = db.query(User).filter(User.user_id == reminder.user_id).first()
     if not user:
@@ -28,7 +24,7 @@ def add_reminder(reminder: ReminderSchema, db: Session = Depends(get_db)):
     return {"message": "Reminder added", "reminder_id": new_reminder.reminder_id}
 
 @router.get("/{user_id}")
-def get_reminders(user_id: int, db: Session = Depends(get_db)):
+def get_reminders(user_id: int, db: Session = Depends(SessionLocal)):
     reminders = db.query(Reminder).filter(Reminder.user_id == user_id).all()
     if not reminders:
         raise HTTPException(status_code=404, detail="No reminders found")
