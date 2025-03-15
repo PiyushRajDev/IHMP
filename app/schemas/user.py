@@ -4,7 +4,7 @@ from app.models.enums import RoleEnum
 class UserSchema(BaseModel):
     username: str
     email: str
-    password: str
+    hashed_password: str
     phone_number: str
     role: RoleEnum
 
