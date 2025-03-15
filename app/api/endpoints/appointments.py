@@ -1,14 +1,10 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from app.models.model import Appointment, User
-from app.schemas.scemas import AppointmentCreate
+from app.models import Appointment, User
+from app.schemas import AppointmentCreate
 from app.database.database import SessionLocal
 
-router = APIRouter(
-    prefix="/appointments",
-    tags=["appointments"],
-    responses={404: {"description": "Not found"}},
-)
+router = APIRouter()
 
 def get_db():
     db = SessionLocal()
