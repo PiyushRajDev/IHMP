@@ -2,7 +2,7 @@
 from .api import router as api_router
 from .models import (
     User, EHR, Appointment, AllergyTracking, LabResults, MedicalHistory,
-    Prescription, Reminder, PatientUploadedDocs,
+    Prescription, Reminder, PatientUploadedDocs, AITranscriptions,
     DiagnosticInsights, EHRSummary, FollowupRecommendations, HealthMonitoringLogs
 )
 from .schemas import (
@@ -12,4 +12,4 @@ from .schemas import (
     PatientUploadedDocsSchema, AITranscriptionsSchema, DiagnosticInsightsSchema,
     EHRSummarySchema, FollowupRecommendationsSchema, HealthMonitoringLogsSchema
 )
-from app.database.database import SessionLocal, engine, Base
+from .database import SessionLocal, engine, Base

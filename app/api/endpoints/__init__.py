@@ -9,6 +9,7 @@ from app.api.endpoints import (
     prescriptions, 
     reminders,
     patient_documents,
+    ai_transcriptions,
     diagnostic_insights,
     ehr_summaries,
     followup_recommendations,
@@ -27,6 +28,7 @@ router.include_router(medical_history.router)
 router.include_router(prescriptions.router)
 router.include_router(reminders.router)
 router.include_router(patient_documents.router)
+router.include_router(ai_transcriptions.router)
 router.include_router(diagnostic_insights.router)
 router.include_router(ehr_summaries.router)
 router.include_router(followup_recommendations.router)
