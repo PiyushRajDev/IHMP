@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api.endpoints import users, ehr, appointments, allergies, lab_results, medical_history, prescriptions, reminders, followup_recommendations, health_monitoring_logs,ehr_summaries,patient_documents
+from app.api.endpoints import users, ehr, appointments, allergies, lab_results,ai_transcriptions, medical_history, prescriptions, reminders, followup_recommendations, health_monitoring_logs,ehr_summaries,patient_documents,diagnostic_insights
 from app.database.database import engine, Base
 from app.config import settings
 
@@ -24,6 +24,8 @@ app.include_router(followup_recommendations.router, prefix="/followup", tags=["F
 app.include_router(health_monitoring_logs.router, prefix="/health_monitoring", tags=["Health Monitoring"])
 app.include_router(ehr_summaries.router, prefix="/ehrsummary", tags=["Ehr-summary"])
 app.include_router(patient_documents.router, prefix="/document", tags=["Patient-document"])
+app.include_router(diagnostic_insights.router, prefix="/diagnosis", tags=["Diagnostic_insights"])
+app.include_router(ai_transcriptions.router, prefix="/transcriptions", tags=["ai_transcriptions"])
 
 @app.get("/")
 def root():
